@@ -5,7 +5,7 @@ There is no limitation for number ranges.
 The trained ckpt is offered in this repo as:
 ```
 ./1bit_w_carry_range.pth
-```.
+```
 ## Train
 ```
 python train.py
