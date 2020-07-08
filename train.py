@@ -16,6 +16,8 @@ parser.add_argument('--len_dataset', type=int, default=1000,
                     help='Number of iters in an epoch.')
 parser.add_argument('--batch_size', type=int, default=20,
                     help='Batch size.')
+parser.add_argument('--output_path', type=str, default='./1bit_w_carry_range.pth',
+                    help='Path to put the model ckpt.')
 
 args = parser.parse_args()
 
@@ -61,7 +63,7 @@ def init(epoch_num, len_dataset, batch_size):
 def main():
 	opt = init(args.epoch_num, args.len_dataset, args.batch_size)
 	train(*opt)
-	torch.save(opt[1].state_dict(), './1bit_w_carry_range_2.pth')
+	torch.save(opt[1].state_dict(), args.output_path)
 
 
 if __name__ == '__main__':
