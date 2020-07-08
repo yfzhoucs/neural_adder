@@ -29,8 +29,7 @@ def train_epoch(epoch_idx, model, data_loader, criterion, optimizer):
 		optimizer.zero_grad()
 		y_pred, cout_pred = model(x1, x2, cin)
 		loss = criterion(y_pred, y) + criterion(cout_pred, cout)
-		# loss = criterion(c_pred, c)
-		# loss = criterion(y_pred, y)
+
 		loss.backward()
 		optimizer.step()
 		y_pred[y_pred > 0.9] = 1
@@ -38,7 +37,7 @@ def train_epoch(epoch_idx, model, data_loader, criterion, optimizer):
 		cout_pred[cout_pred > 0.9] = 1
 		cout_pred[cout_pred <= 0.1] = 0
 		acc = (y_pred.eq(y).sum().item() + cout_pred.eq(cout).sum().item()) / (y_pred.nelement() + cout_pred.nelement())
-		# acc = (y_pred.eq(y).sum().item()) / (y_pred.nelement())
+
 		if iter_idx % 10 == 0:
 			print(epoch_idx, '{}/{}'.format(iter_idx, len(data_loader)), loss.item(), acc)
 
