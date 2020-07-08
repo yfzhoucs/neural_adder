@@ -1,4 +1,4 @@
-import adder
+import model.adder as adder
 import torch.nn as nn
 import torch.nn.functional as F
 import torch
@@ -20,7 +20,6 @@ class SeqAdder(nn.Module):
 
         c = torch.zeros(x1.shape[0], 1)
         for i in range(length):
-            print(x1[:, i:i+1].shape)
             y_i, c = self.adder(x1[:,i:i+1], x2[:,i:i+1], c)
             y[:,i:i+1] = y_i
         

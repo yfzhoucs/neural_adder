@@ -10,11 +10,14 @@ class AdderDataset(Dataset):
 		return self.num_samples
 
 	def __getitem__(self, idx):
-		x1 = torch.randint(0, 2, (1,))
-		x2 = torch.randint(0, 2, (1,))
-		cin = torch.randint(0, 2, (1,))
+		x1_int = torch.randint(0, 2, (1,))
+		x2_int = torch.randint(0, 2, (1,))
+		cin_int = torch.randint(0, 2, (1,))
+		x1 = x1_int.float() * 0.9 + torch.rand((1,)) * 0.1
+		x2 = x2_int.float() * 0.9 + torch.rand((1,)) * 0.1
+		cin = cin_int.float() * 0.9 + torch.rand((1,)) * 0.1
 		
-		sum_of_inputs = x1.item() + x2.item() + cin.item()
+		sum_of_inputs = x1_int.item() + x2_int.item() + cin_int.item()
 		
 		y = torch.zeros(1)
 		cout = torch.zeros(1)

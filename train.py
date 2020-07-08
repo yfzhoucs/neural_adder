@@ -5,6 +5,19 @@ import model.adder as adder
 from torch.utils.data import DataLoader
 import torch.nn as nn
 import torch
+import argparse
+
+
+parser = argparse.ArgumentParser(description='Args for training.')
+
+parser.add_argument('--epoch_num', type=int, default=1000,
+                    help='Number of epochs to train.')
+parser.add_argument('--len_dataset', type=int, default=1000,
+                    help='Number of iters in an epoch.')
+parser.add_argument('--batch_size', type=int, default=20,
+                    help='Batch size.')
+
+args = parser.parse_args()
 
 
 def train_epoch(epoch_idx, model, data_loader, criterion, optimizer):
@@ -18,10 +31,10 @@ def train_epoch(epoch_idx, model, data_loader, criterion, optimizer):
 		# loss = criterion(y_pred, y)
 		loss.backward()
 		optimizer.step()
-		y_pred[y_pred > 0.5] = 1
-		y_pred[y_pred <= 0.5] = 0
-		cout_pred[cout_pred > 0.5] = 1
-		cout_pred[cout_pred <= 0.5] = 0
+		y_pred[y_pred > 0.9] = 1
+		y_pred[y_pred <= 0.1] = 0
+		cout_pred[cout_pred > 0.9] = 1
+		cout_pred[cout_pred <= 0.1] = 0
 		acc = (y_pred.eq(y).sum().item() + cout_pred.eq(cout).sum().item()) / (y_pred.nelement() + cout_pred.nelement())
 		# acc = (y_pred.eq(y).sum().item()) / (y_pred.nelement())
 		if iter_idx % 10 == 0:
@@ -46,9 +59,9 @@ def init(epoch_num, len_dataset, batch_size):
 
 
 def main():
-	opt = init(500, 1000, 20)
+	opt = init(args.epoch_num, args.len_dataset, args.batch_size)
 	train(*opt)
-	torch.save(opt[1].state_dict(), './1bit_w_carry.pth')
+	torch.save(opt[1].state_dict(), './1bit_w_carry_range_2.pth')
 
 
 if __name__ == '__main__':

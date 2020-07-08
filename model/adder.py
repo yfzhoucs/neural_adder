@@ -18,6 +18,7 @@ class Adder(nn.Module):
 		x1 = x1.float()
 		x2 = x2.float()
 		cin = cin.float()
+		# print(x1.shape, x2.shape, cin.shape)
 		x = torch.cat([x1, x2, cin], dim=1)
 		x = F.sigmoid(self.linear1(x))
 		# x = F.sigmoid(self.linear2(x))
